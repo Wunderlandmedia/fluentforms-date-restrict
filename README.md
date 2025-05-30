@@ -2,6 +2,12 @@
 
 Global Date Blocker enhances your Fluent Forms by allowing administrators to globally disable specific dates and enabling dynamic date range selections (like check-in/check-out) with intelligent restrictions.
 
+## Background & Motivation
+
+This plugin was born from a real client need: **globally restricting certain dates like holidays** across booking forms. Initially, I was implementing this functionality directly in the Fluent Forms datepicker field, but this approach wasn't viable for scalable, maintainable solutions.
+
+The client needed a way to easily mark holidays and other unavailable dates that would automatically be respected across their booking system. Rather than modifying each form individually or hardcoding restrictions, this plugin provides a centralized solution that works seamlessly with Fluent Forms.
+
 ## Overview
 
 Managing availability for bookings, appointments, or any date-sensitive form can be challenging. This plugin simplifies the process by providing:
@@ -26,8 +32,6 @@ This plugin is designed to work seamlessly with Fluent Forms. It specifically lo
 *   **Open Source**: MIT Licensed, ready for you to fork and customize!
 
 ## Screenshots
-
-Showcase the plugin's interface and functionality.
 
 1.  **Admin Settings Page**: Configure target form, field names, and select globally disabled dates.
     
@@ -110,20 +114,25 @@ The core logic resides in `assets/js/gdb-frontend.js`:
         *   If the currently selected check-in date becomes invalid, it is cleared.
 7.  **Clear Buttons**: Small "X" buttons are added next to each date input, allowing users to easily clear their selection.
 
-## Future Enhancements
+## Future Development Ideas
 
-This plugin is actively developed. Potential future enhancements include:
+**Current Scope**: This plugin currently targets a single Fluent Form, which meets the immediate client need.
 
+**Potential Enhancements**: Future development could include:
+
+*   **Multiple Form Support with Custom Post Types**: Implement a custom post type solution to create multiple instances of date blockers, each targeting different Fluent Forms. This would enable an Airbnb-like solution where administrators could:
+    *   Manage multiple properties/rooms with individual availability calendars
+    *   Set specific restrictions per room or property type
+    *   Have granular control over what's available for different booking objects
 *   **Single Date Range Field**: Revamp the selection to use a single Fluent Forms field that opens a date range picker, simplifying the user interface.
-*   **More Granular Control**: Allow disabling dates per form or per specific date field, rather than only globally.
 *   **Recurring Date Rules**: Add options to disable recurring dates (e.g., all weekends, specific days of the week).
 *   **Improved UI for Admin**: Enhanced admin interface for managing dates and settings.
 
-Feel free to suggest features by opening an issue!
+Since this is MIT licensed, you're free to fork and extend the functionality to meet your specific needs!
 
 ## Contributing
 
-This is an open-source project, and contributions are welcome!
+This is an open-source project under the MIT License. Contributions are welcome!
 
 1.  **Fork** the repository on GitHub.
 2.  **Create a new branch** for your feature or bug fix.
@@ -132,6 +141,8 @@ This is an open-source project, and contributions are welcome!
 5.  **Submit a Pull Request** to the main repository.
 
 Please ensure your code adheres to WordPress coding standards.
+
+Since this project uses the MIT License, you're also free to fork it and create your own version without contributing back - though contributions are always appreciated!
 
 ## License
 
