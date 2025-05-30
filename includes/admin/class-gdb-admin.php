@@ -196,4 +196,4 @@ class GDB_Admin {
     public function get_meta_boxes() {
         return $this->meta_boxes;
     }
-} 
+}

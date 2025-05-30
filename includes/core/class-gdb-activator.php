@@ -22,9 +22,7 @@
 class GDB_Activator {
 
     /**
-     * Short Description. (use period)
-     *
-     * Long Description.
+     * Plugin activation tasks.
      *
      * @since    1.0.0
      */
@@ -38,11 +36,10 @@ class GDB_Activator {
         update_option('gdb_version', GDB_VERSION);
         
         // Register the CPT before flushing rewrite rules
-        // We need to create a temporary instance to register the CPT
-        if (class_exists('GDB_Admin')) {
-            $temp_admin = new GDB_Admin('global-date-blocker', GDB_VERSION);
-            $temp_admin->register_calendar_restriction_cpt();
-        }
+        // Load and initialize the CPT Manager to register the CPT
+        require_once GDB_PLUGIN_PATH . 'includes/admin/class-gdb-cpt-manager.php';
+        $cpt_manager = new GDB_CPT_Manager();
+        $cpt_manager->register_calendar_restriction_cpt();
         
         // Flush rewrite rules for the new CPT
         flush_rewrite_rules();

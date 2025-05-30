@@ -22,9 +22,7 @@
 class GDB_Deactivator {
 
     /**
-     * Short Description. (use period)
-     *
-     * Long Description.
+     * Plugin deactivation tasks.
      *
      * @since    1.0.0
      */
