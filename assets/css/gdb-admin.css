@@ -1,0 +1,179 @@
+/**
+ * Admin styles for Global Date Blocker
+ *
+ * @package Global_Date_Blocker
+ * @since 1.0.0
+ */
+
+/* Admin page specific styles */
+.gdb-admin-page {
+    max-width: 800px;
+}
+
+.gdb-admin-page .form-table th {
+    width: 200px;
+}
+
+/* Calendar container */
+.gdb-calendar-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    clear: both;
+}
+
+/* Override WordPress admin styles that might conflict */
+.gdb-calendar-container * {
+    box-sizing: border-box;
+}
+
+.gdb-calendar-container .flatpickr-calendar {
+    position: relative !important;
+    z-index: 999;
+}
+
+/* Flatpickr calendar base styling - moved from JavaScript injection */
+.flatpickr-calendar {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    position: relative !important;
+    display: block !important;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.flatpickr-calendar.inline {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+/* Flatpickr day selection styling - moved from JavaScript injection */
+.flatpickr-day.selected {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.flatpickr-day.selected:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+/* Admin page specific overrides */
+.gdb-admin-page .flatpickr-calendar {
+    font-size: 14px;
+}
+
+.gdb-admin-page .flatpickr-day.selected {
+    background: #2271b1;
+    border-color: #2271b1;
+}
+
+.gdb-admin-page .flatpickr-day.selected:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+/* Ensure navigation arrows stay within calendar */
+.flatpickr-calendar .flatpickr-months {
+    position: relative;
+    overflow: visible;
+}
+
+.flatpickr-calendar .flatpickr-month {
+    position: relative;
+}
+
+.flatpickr-calendar .flatpickr-prev-month,
+.flatpickr-calendar .flatpickr-next-month {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 3;
+    width: 28px;
+    height: 28px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.flatpickr-calendar .flatpickr-prev-month:hover,
+.flatpickr-calendar .flatpickr-next-month:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.flatpickr-calendar .flatpickr-prev-month {
+    left: 12px !important;
+}
+
+.flatpickr-calendar .flatpickr-next-month {
+    right: 12px !important;
+}
+
+/* Ensure month title has proper spacing for arrows */
+.flatpickr-calendar .flatpickr-current-month {
+    padding: 0 50px;
+    text-align: center;
+}
+
+/* Debug info styling */
+.gdb-debug-info {
+    background: #fff3cd;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+}
+
+.gdb-debug-info h4 {
+    margin-top: 0;
+}
+
+.gdb-debug-info pre {
+    font-size: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+/* Form submission debug */
+.gdb-form-debug {
+    background: #e3f2fd;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #2196f3;
+    border-radius: 4px;
+}
+
+.gdb-form-debug h4 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+/* Success/Error message styling */
+.gdb-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.gdb-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.gdb-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+} 
