@@ -29,12 +29,14 @@ class GDB_Deactivator {
      * @since    1.0.0
      */
     public static function deactivate() {
-        // Flush rewrite rules
+        // Flush rewrite rules to clean up CPT rules
         flush_rewrite_rules();
         
         // Note: We don't delete the main options here as users might want to keep their settings
-        // If you want to clean up everything on deactivation, uncomment the following:
-        // delete_option('gdb_disabled_dates');
-        // delete_option('gdb_version');
+        // We also don't delete CPT posts as users might want to keep their calendar restrictions
+        // If you want to clean up everything on deactivation, you would need to:
+        // - Delete all gdb_calendar_restriction posts
+        // - Delete their meta data
+        // - Delete legacy options: gdb_disabled_dates, gdb_form_id, gdb_checkin_field, gdb_checkout_field, gdb_version
     }
 } 

@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Global Date Blocker
  * Plugin URI: https://wunderlandmedia.com/
- * Description: A WordPress plugin to manage globally disabled dates for Fluent Forms date pickers and enable date range selection functionality.
- * Version: 1.0.0
+ * Description: A WordPress plugin to manage multiple disabled dates restrictions for Fluent Forms using Custom Post Types. Each Calendar Restriction can target different forms and field configurations.
+ * Version: 2.0.0
  * Author: Wunderlandmedia
  * Author URI: https://wunderlandmedia.com/
  * Text Domain: global-date-blocker
@@ -21,9 +21,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('GDB_VERSION', '1.0.0');
+define('GDB_VERSION', '2.0.0');
 define('GDB_PLUGIN_FILE', __FILE__);
 define('GDB_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('GDB_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('GDB_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('GDB_PLUGIN_BASENAME', plugin_basename(__FILE__));
 

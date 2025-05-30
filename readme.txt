@@ -1,139 +1,128 @@
 === Global Date Blocker ===
 Contributors: wunderlandmedia
-Tags: fluent-forms, date-picker, booking, restrictions, calendar
+Donate link: https://wunderlandmedia.com/
+Tags: fluent forms, date picker, booking, calendar, restrictions, availability, custom post type
 Requires at least: 5.0
 Tested up to: 6.4
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 2.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-A WordPress plugin to manage globally disabled dates for Fluent Forms date pickers and enable date range selection functionality.
+Create multiple calendar restriction configurations for Fluent Forms. Each restriction can target different forms with unique disabled dates and intelligent date range logic.
 
 == Description ==
 
-Global Date Blocker is a powerful WordPress plugin designed to enhance Fluent Forms with advanced date picker functionality. It provides two main features:
+Global Date Blocker enhances your Fluent Forms by allowing administrators to create unlimited calendar restriction configurations using WordPress Custom Post Types. Perfect for hotels, rental companies, event venues, or any business managing multiple booking forms.
 
-1. **Global Date Management**: Easily manage a list of dates that should be disabled across your Fluent Forms date pickers through an intuitive admin interface.
+**Key Features:**
 
-2. **Date Range Selection**: Enable check-in/check-out date range functionality where the check-out date must be after the check-in date, with automatic validation and date restrictions.
+* **Multiple Calendar Restrictions** - Create unlimited restriction configurations using WordPress Custom Post Types
+* **Per-Form Configuration** - Each restriction targets a specific Fluent Form with its own settings  
+* **Visual Date Management** - Intuitive Flatpickr calendar interface for selecting disabled dates
+* **Dynamic Date Logic** - Intelligent check-in/check-out functionality with automatic restrictions
+* **Multi-Form Support** - Multiple forms on the same page work independently
+* **Performance Optimized** - Scripts only load when valid configurations exist
+* **BricksExtras Compatible** - Works seamlessly with BricksExtras Fluent Forms integration
+* **Developer Friendly** - Built with WordPress best practices and clean code
 
-= Key Features =
+**Perfect For:**
 
-* **Easy Admin Interface**: Use a visual calendar to select multiple dates that should be globally disabled
-* **Configurable Form Targeting**: Set target form ID and field names through the admin interface
-* **Automatic Integration**: Works seamlessly with Fluent Forms Pro without requiring code modifications
-* **Date Range Logic**: Intelligent check-in/check-out date validation
-* **Flexible Configuration**: Target any form and customize field names to match your setup
-* **WordPress Standards**: Built following WordPress coding standards and best practices
+* Hotels and accommodations with multiple room types
+* Event venues with different booking forms
+* Equipment rental companies  
+* Service providers with various booking categories
+* Any business requiring multiple form-specific date restrictions
 
-= Perfect For =
+**How It Works:**
 
-* Hotel booking forms
-* Event registration with blackout dates
-* Appointment scheduling
-* Rental booking systems
-* Any form requiring date restrictions
+1. Create "Calendar Restriction" posts in WordPress admin
+2. Configure each restriction with target form ID and field names
+3. Select disabled dates using the visual calendar interface
+4. Publish restrictions to activate them on your forms
+5. Each form gets its own independent date restrictions
+
+**Version 2.0 Major Update:**
+
+This version introduces a complete architectural redesign from single global settings to a flexible Custom Post Type system. Create as many calendar restrictions as needed, each targeting different Fluent Forms with unique configurations.
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/booking-restrict` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Navigate to Settings > Global Date Blocker to configure your form targeting and disabled dates.
-4. Set up your Fluent Form with date fields matching the names you configured.
-
-== Configuration ==
-
-= Initial Setup =
-
-1. Go to Settings > Global Date Blocker in your WordPress admin
-2. Configure your form targeting:
-   - **Target Form ID**: Enter the ID of your Fluent Form
-   - **Check-in Field Name**: Enter the name attribute of your check-in date field
-   - **Check-out Field Name**: Enter the name attribute of your check-out date field
-3. Use the calendar interface to select dates that should be disabled
-4. Click "Save Settings"
-
-= Setting Up Your Fluent Form =
-
-1. Create or edit your Fluent Form
-2. Add two Date/Time fields:
-   - Set the first field's name attribute to match your configured check-in field name
-   - Set the second field's name attribute to match your configured check-out field name
-3. Save your form
-
-= Managing Disabled Dates =
-
-1. Go to Settings > Global Date Blocker in your WordPress admin
-2. Use the calendar interface to select dates that should be disabled
-3. Click "Save Settings"
-4. The selected dates will automatically be disabled in your form's date pickers
+1. Upload the plugin files to `/wp-content/plugins/booking-restrict/` directory, or install directly through WordPress admin
+2. Activate the plugin through the 'Plugins' screen in WordPress admin
+3. Navigate to 'Calendar Restrictions' in WordPress admin to create your first restriction
+4. Configure your Fluent Forms with the appropriate field names
+5. Test your forms to ensure restrictions are working correctly
 
 == Frequently Asked Questions ==
 
-= Does this work with Fluent Forms Lite? =
+= How many calendar restrictions can I create? =
 
-This plugin is designed for Fluent Forms Pro. Some features may not work with the Lite version.
+Unlimited! The new CPT system allows you to create as many calendar restriction configurations as needed.
 
-= Can I target multiple forms? =
+= Can I target multiple forms with different restrictions? =
 
-Currently, the plugin targets one form at a time. You can change the target form ID through the admin settings at any time.
+Yes! Each calendar restriction can target a different Fluent Form with its own unique disabled dates and field configurations.
 
-= What field names can I use? =
+= Can multiple forms on the same page have different restrictions? =
 
-You can use any field names for your check-in and check-out date fields. Just make sure they match what you configure in the admin settings.
+Absolutely! The plugin is designed to handle multiple forms independently, each with their own restrictions.
 
-= What date format is used? =
+= How do I find my Fluent Form ID? =
 
-The plugin uses the YYYY-MM-DD format for date storage and processing.
+In your WordPress admin, go to Fluent Forms → All Forms. The ID is shown in the list, or you can find it in the form's edit URL.
 
-= Can I disable weekends or recurring dates? =
+= What field names should I use? =
 
-Currently, the plugin supports selecting specific individual dates. Recurring date patterns may be added in future versions.
+Use the 'name' attribute of your date fields in Fluent Forms. You can set this in the field's "Input Customization" settings.
+
+= Does this work with BricksExtras? =
+
+Yes! The plugin automatically detects BricksExtras form wrappers and falls back to standard Fluent Forms selectors as needed.
+
+= Is this compatible with Fluent Forms Pro? =
+
+Yes, this plugin is designed to work with both free and Pro versions of Fluent Forms, though Pro is recommended for full functionality.
+
+= Can I migrate from version 1.x? =
+
+Version 2.0 is a complete rewrite. After updating, create new Calendar Restrictions with your previous settings. The old system is no longer used.
+
+= How do I debug issues? =
+
+Enable WP_DEBUG in your wp-config.php file. The plugin provides detailed console logging when debug mode is active.
 
 == Screenshots ==
 
-1. Admin Settings Page - Configure target form, field names, and select globally disabled dates using the intuitive calendar interface
-2. Frontend Form in Action - Fluent Form showing date pickers with disabled dates and intelligent date range logic
+1. Calendar Restrictions management - WordPress admin showing list of restrictions
+2. Creating a new restriction - Add new calendar restriction with configuration options  
+3. Meta box interface - Restriction settings and disabled dates calendar
+4. Frontend multi-form - Multiple forms working independently with different restrictions
 
 == Changelog ==
 
+= 2.0.0 =
+* **MAJOR UPDATE:** Complete architectural redesign from global settings to Custom Post Type system
+* NEW: Create unlimited calendar restriction configurations  
+* NEW: Each restriction targets specific Fluent Forms independently
+* NEW: Custom Post Type management interface with meta boxes
+* NEW: Multi-form support on same page without conflicts
+* NEW: Performance optimizations - scripts only load when needed
+* NEW: Enhanced debugging capabilities
+* CHANGED: Moved from wp_options to post_meta data storage
+* CHANGED: Frontend JavaScript completely refactored for multi-configuration support
+* CHANGED: Admin interface now uses WordPress CPT instead of settings page
+* REMOVED: Old global settings system deprecated
+* IMPROVED: Better error handling and validation
+* IMPROVED: Code structure follows WordPress best practices
+
 = 1.0.0 =
-* Initial release
-* Global date blocking functionality
-* Check-in/check-out date range logic
-* Admin interface with Flatpickr integration
-* Fluent Forms Pro integration
-* Configurable form targeting (form ID and field names)
+* Initial release with global date blocking functionality
+* Single form configuration support
+* Basic Flatpickr integration
+* Check-in/check-out date logic
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-Initial release of Global Date Blocker plugin.
-
-== Technical Details ==
-
-= Requirements =
-* WordPress 5.0 or higher
-* PHP 8.0 or higher
-* Fluent Forms Pro 6.0.3 or higher
-* jQuery (included with WordPress)
-
-= Browser Support =
-* Chrome (latest)
-* Firefox (latest)
-* Safari (latest)
-* Edge (latest)
-
-= Hooks and Filters =
-The plugin provides several hooks for developers:
-* `gdb_disabled_dates` - Filter the array of disabled dates
-* `gdb_form_config` - Modify form targeting configuration
-
-== Support ==
-
-For support, please visit the plugin's support forum or contact the developer.
-
-== Privacy ==
-
-This plugin does not collect or store any personal data. It only manages date selections made by administrators and applies them to form date pickers. 
+= 2.0.0 =
+Major update! Complete rewrite from global settings to Custom Post Type system. After updating, you'll need to create new Calendar Restrictions to replace your old global settings. This version supports unlimited restrictions and multi-form configurations. 

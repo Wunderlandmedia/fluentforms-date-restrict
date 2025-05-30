@@ -83,6 +83,59 @@ class GDB_Frontend {
             return;
         }
 
+        // Query all published Calendar Restriction posts
+        $restriction_posts = get_posts(array(
+            'post_type' => 'gdb_restriction',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => '_gdb_form_id',
+                    'value' => '',
+                    'compare' => '!='
+                )
+            )
+        ));
+
+        // If no configurations found, don't enqueue scripts
+        if (empty($restriction_posts)) {
+            return;
+        }
+
+        // Build configuration array
+        $frontend_configs = array();
+        foreach ($restriction_posts as $post) {
+            $form_id = get_post_meta($post->ID, '_gdb_form_id', true);
+            $checkin_field_name = get_post_meta($post->ID, '_gdb_checkin_field_name', true);
+            $checkout_field_name = get_post_meta($post->ID, '_gdb_checkout_field_name', true);
+            $disabled_dates = get_post_meta($post->ID, '_gdb_disabled_dates', true);
+
+            // Skip if essential data is missing
+            if (empty($form_id) || empty($checkin_field_name) || empty($checkout_field_name)) {
+                continue;
+            }
+
+            // Ensure disabled_dates is an array
+            if (!is_array($disabled_dates)) {
+                $disabled_dates = array();
+            }
+
+            // Add configuration to array
+            $frontend_configs[] = array(
+                'restrictionId' => $post->ID,
+                'restrictionTitle' => $post->post_title,
+                'formId' => intval($form_id),
+                'checkinField' => sanitize_text_field($checkin_field_name),
+                'checkoutField' => sanitize_text_field($checkout_field_name),
+                'disabledDates' => $disabled_dates
+            );
+        }
+
+        // If no valid configurations found, don't enqueue scripts
+        if (empty($frontend_configs)) {
+            return;
+        }
+
         // Enqueue our frontend script
         wp_enqueue_script(
             $this->plugin_name . '-frontend',
@@ -92,19 +145,13 @@ class GDB_Frontend {
             true
         );
 
-        // Load configuration from database
-        $disabled_dates = get_option('gdb_disabled_dates', array());
-        $form_id = get_option('gdb_form_id', 3);
-        $checkin_field = get_option('gdb_checkin_field', 'checkin');
-        $checkout_field = get_option('gdb_checkout_field', 'checkout');
+        // Localize script with multiple configurations
+        wp_localize_script($this->plugin_name . '-frontend', 'gdbFrontendConfigs', $frontend_configs);
         
-        // Localize script with disabled dates and configuration
+        // Also localize debug mode setting
         wp_localize_script($this->plugin_name . '-frontend', 'gdbFrontendData', array(
-            'disabledDates' => $disabled_dates,
-            'formId' => $form_id,
-            'checkinField' => $checkin_field,
-            'checkoutField' => $checkout_field,
-            'debugMode' => defined('WP_DEBUG') && WP_DEBUG
+            'debugMode' => defined('WP_DEBUG') && WP_DEBUG,
+            'configCount' => count($frontend_configs)
         ));
     }
 } 
