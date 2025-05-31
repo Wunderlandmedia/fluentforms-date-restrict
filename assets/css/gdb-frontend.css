@@ -1,20 +1,20 @@
 /* Global Date Blocker Frontend Styles */
 
 /* Enhanced styling for disabled dates */
-.flatpickr-day.flatpickr-disabled {
-    background: #f5f5f5 !important;
-    color: #ccc !important;
-    cursor: not-allowed !important;
+.fluentform .flatpickr-day.flatpickr-disabled {
+    background: #f5f5f5;
+    color: #ccc;
+    cursor: not-allowed;
     position: relative;
 }
 
-.flatpickr-day.flatpickr-disabled:hover {
-    background: #f5f5f5 !important;
-    color: #ccc !important;
+.fluentform .flatpickr-day.flatpickr-disabled:hover {
+    background: #f5f5f5;
+    color: #ccc;
 }
 
 /* Add a subtle pattern to disabled dates */
-.flatpickr-day.flatpickr-disabled::before {
+.fluentform .flatpickr-day.flatpickr-disabled::before {
     content: '';
     position: absolute;
     top: 0;
@@ -32,98 +32,98 @@
 }
 
 /* Clear buttons (X buttons) for date fields */
-.gdb-clear-btn {
-    position: absolute !important;
-    right: 10px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    background: transparent !important;
-    color: #666666 !important;
-    border: 1px solid #666666 !important;
-    border-radius: 50% !important;
-    width: 16px !important;
-    height: 16px !important;
-    font-size: 14px !important;
-    line-height: 1 !important;
-    cursor: pointer !important;
+.fluentform .gdb-clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #666666;
+    border: 1px solid #666666;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
     display: none;
-    z-index: 1000 !important;
-    text-align: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    transition: background-color 0.2s ease !important;
-    justify-content: center !important;
-    align-items: center !important;
+    z-index: 1000;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    transition: background-color 0.2s ease;
+    justify-content: center;
+    align-items: center;
 }
 
-.gdb-clear-btn svg {
-    fill: currentColor !important;
-    width: 8px !important;
-    height: 8px !important;
-    display: block !important;
+.fluentform .gdb-clear-btn .gdb-clear-icon {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
 }
 
-.gdb-clear-btn.gdb-show {
-    display: flex !important;
+.fluentform .gdb-clear-btn.gdb-show {
+    display: flex;
 }
 
-.gdb-clear-btn:hover {
-    background: lightgray !important;
+.fluentform .gdb-clear-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
 }
 
-.gdb-clear-btn:active {
-    background: lightgray !important;
-    transform: translateY(-50%) scale(0.95) !important;
+.fluentform .gdb-clear-btn:active {
+    background: #e0e0e0;
+    transform: translateY(-50%) scale(0.95);
 }
 
-.gdb-clear-btn:focus {
-    outline: 2px solid lightgray !important;
-    outline-offset: 2px !important;
+.fluentform .gdb-clear-btn:focus {
+    outline: 2px solid #2196f3;
+    outline-offset: 2px;
 }
 
 /* Style for date range selection */
-.flatpickr-day.inRange {
-    background: #e3f2fd !important;
-    border-color: #2196f3 !important;
-    color: #1976d2 !important;
+.fluentform .flatpickr-day.inRange {
+    background: #e3f2fd;
+    border-color: #2196f3;
+    color: #1976d2;
 }
 
-.flatpickr-day.startRange,
-.flatpickr-day.endRange {
-    background: #2196f3 !important;
-    border-color: #2196f3 !important;
-    color: white !important;
+.fluentform .flatpickr-day.startRange,
+.fluentform .flatpickr-day.endRange {
+    background: #2196f3;
+    border-color: #2196f3;
+    color: white;
 }
 
 /* Improve calendar appearance */
-.flatpickr-calendar {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 8px !important;
+.fluentform .flatpickr-calendar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
 }
 
-.flatpickr-months {
-    background: #f8f9fa !important;
-    border-radius: 8px 8px 0 0 !important;
+.fluentform .flatpickr-months {
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .flatpickr-calendar {
+    .fluentform .flatpickr-calendar {
         font-size: 14px;
     }
     
-    .flatpickr-day {
-        height: 35px !important;
-        line-height: 35px !important;
-        max-width: 35px !important;
+    .fluentform .flatpickr-day {
+        height: 35px;
+        line-height: 35px;
+        max-width: 35px;
     }
     
-    .gdb-clear-btn {
-        width: 18px !important;
-        height: 18px !important;
-        font-size: 12px !important;
-        right: 8px !important;
+    .fluentform .gdb-clear-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+        right: 8px;
     }
 }
 
@@ -144,32 +144,32 @@
 }
 
 /* Error state for invalid date selections */
-.gdb-date-error {
-    border-color: #f44336 !important;
-    background-color: #fff5f5 !important;
+.fluentform .gdb-date-error {
+    border-color: #f44336;
+    background-color: #fff5f5;
 }
 
-.gdb-date-error:focus {
-    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2) !important;
+.fluentform .gdb-date-error:focus {
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
 }
 
 /* Success state for valid date selections */
-.gdb-date-valid {
-    border-color: #4caf50 !important;
+.fluentform .gdb-date-valid {
+    border-color: #4caf50;
 }
 
-.gdb-date-valid:focus {
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2) !important;
+.fluentform .gdb-date-valid:focus {
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
 /* Loading state */
-.gdb-loading {
+.fluentform .gdb-loading {
     position: relative;
     pointer-events: none;
     opacity: 0.6;
 }
 
-.gdb-loading::after {
+.fluentform .gdb-loading::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -189,11 +189,11 @@
 }
 
 /* Tooltip for disabled dates */
-.flatpickr-day.flatpickr-disabled[title] {
+.fluentform .flatpickr-day.flatpickr-disabled[title] {
     position: relative;
 }
 
-.flatpickr-day.flatpickr-disabled[title]:hover::after {
+.fluentform .flatpickr-day.flatpickr-disabled[title]:hover::after {
     content: attr(title);
     position: absolute;
     bottom: 100%;
@@ -209,7 +209,7 @@
     margin-bottom: 5px;
 }
 
-.flatpickr-day.flatpickr-disabled[title]:hover::before {
+.fluentform .flatpickr-day.flatpickr-disabled[title]:hover::before {
     content: '';
     position: absolute;
     bottom: 100%;

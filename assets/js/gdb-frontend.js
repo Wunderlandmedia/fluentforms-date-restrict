@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     // Check if required data is available
     if (typeof gdbFrontendConfigs === 'undefined' || !Array.isArray(gdbFrontendConfigs)) {
         if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
+            console.log('GDB: Frontend configs not available or invalid');
         }
         return;
     }
@@ -14,22 +15,23 @@ jQuery(document).ready(function($) {
         return;
     }
     
-    // Debug info
     if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
+        console.log('GDB: Initializing with configs:', gdbFrontendConfigs);
     }
     
     // Store form instances to avoid conflicts
     var formInstances = {};
+    var isInitialized = false;
+    
+    // Utility function for date formatting to YYYY-MM-DD
+    function formatDateToYMD(date) {
+        return flatpickr.formatDate(date, 'Y-m-d');
+    }
     
     // Function to disable specific dates in Flatpickr
     function createDisableDatesFunction(disabledDates) {
         return function(date) {
-            // Check if the date is in our disabled dates array
-            var dateStr = date.getFullYear() + '-' + 
-                         String(date.getMonth() + 1).padStart(2, '0') + '-' + 
-                         String(date.getDate()).padStart(2, '0');
-            
-            return disabledDates.includes(dateStr);
+            return disabledDates.includes(formatDateToYMD(date));
         };
     }
     
@@ -55,16 +57,11 @@ jQuery(document).ready(function($) {
     
     // Function to find the first disabled date after a given date
     function findFirstDisabledDateAfter(afterDate, disabledDates) {
-        var afterDateStr = afterDate.getFullYear() + '-' + 
-                          String(afterDate.getMonth() + 1).padStart(2, '0') + '-' + 
-                          String(afterDate.getDate()).padStart(2, '0');
-        
         var firstDisabledDate = null;
         
         for (var i = 0; i < disabledDates.length; i++) {
             var disabledDate = stringToDate(disabledDates[i]);
             
-            // Only consider dates after the check-in date
             if (disabledDate > afterDate) {
                 if (firstDisabledDate === null || disabledDate < firstDisabledDate) {
                     firstDisabledDate = disabledDate;
@@ -82,11 +79,9 @@ jQuery(document).ready(function($) {
         // Remove existing clear button if any
         $('#' + buttonId).remove();
         
-        // Create clear button with inline SVG
+        // Create clear button with external CSS styling instead of inline SVG
         var $clearBtn = $('<button type="button" id="' + buttonId + '" class="gdb-clear-btn" title="Clear ' + fieldType + ' date">' +
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="12" height="12">' +
-            '<path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>' +
-            '</svg>' +
+            '<span class="gdb-clear-icon">&times;</span>' +
             '</button>');
         
         // Position the field container relatively if not already
@@ -168,6 +163,7 @@ jQuery(document).ready(function($) {
         
         if ($form.length === 0) {
             if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
+                console.warn('GDB: Form not found for ID:', formId);
             }
             return;
         }
@@ -178,6 +174,7 @@ jQuery(document).ready(function($) {
         
         if ($checkinField.length === 0 || $checkoutField.length === 0) {
             if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
+                console.warn('GDB: Required fields not found:', checkinFieldName, checkoutFieldName);
             }
             return;
         }
@@ -282,19 +279,22 @@ jQuery(document).ready(function($) {
         }
         
         // Initial update of clear button visibility
-        setTimeout(function() {
-            updateClearButtonVisibility(formInstance);
-        }, 100);
+        updateClearButtonVisibility(formInstance);
         
         if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
+            console.log('GDB: Applied restrictions to form', formId);
         }
     }
     
     // Function to initialize all configurations
     function initializeAllConfigurations() {
+        if (isInitialized) return;
+        
         gdbFrontendConfigs.forEach(function(config) {
             applyRestrictionsToForm(config);
         });
+        
+        isInitialized = true;
     }
     
     // Function to handle Fluent Forms events
@@ -307,9 +307,10 @@ jQuery(document).ready(function($) {
             });
             
             if (matchingConfig) {
-                setTimeout(function() {
+                // Use requestAnimationFrame for better timing than setTimeout
+                requestAnimationFrame(function() {
                     applyRestrictionsToForm(matchingConfig);
-                }, 100);
+                });
             }
         });
         
@@ -334,27 +335,26 @@ jQuery(document).ready(function($) {
     
     // Initialize when DOM is ready
     function init() {
-        // Set up event handlers
+        // Set up event handlers first
         handleFluentFormsEvents();
         
-        // Try to initialize immediately if forms are already present
-        setTimeout(function() {
+        // Initialize forms that are already present
+        // Use requestAnimationFrame for better performance and timing
+        requestAnimationFrame(function() {
             initializeAllConfigurations();
-        }, 500);
-        
-        // Also try after a longer delay in case of slow loading
-        setTimeout(function() {
-            initializeAllConfigurations();
-        }, 2000);
+        });
     }
     
     // Start initialization
     init();
     
-    // Expose functions for debugging - only in debug mode for security
+    // Expose functions for debugging - only in debug mode
     if (typeof gdbFrontendData !== 'undefined' && gdbFrontendData.debugMode) {
         window.gdbDebug = {
-            reinitialize: initializeAllConfigurations,
+            reinitialize: function() {
+                isInitialized = false;
+                initializeAllConfigurations();
+            },
             formInstances: formInstances,
             configs: gdbFrontendConfigs,
             applyToForm: applyRestrictionsToForm

@@ -185,19 +185,9 @@ class GDB_Meta_Boxes {
 
         // Save Disabled Dates
         if (isset($_POST['gdb_disabled_dates'])) {
-            $disabled_dates_json = sanitize_text_field($_POST['gdb_disabled_dates']);
-            
-            // Handle potential escaping issues
-            $disabled_dates_json = stripslashes($disabled_dates_json);
-            
+            // Use wp_unslash to handle WordPress's automatic escaping
+            $disabled_dates_json = wp_unslash($_POST['gdb_disabled_dates']);
             $disabled_dates = json_decode($disabled_dates_json, true);
-            
-            // Validate JSON decode
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                // Try to fix common JSON issues
-                $disabled_dates_json = str_replace('\\"', '"', $disabled_dates_json);
-                $disabled_dates = json_decode($disabled_dates_json, true);
-            }
             
             // Validate and sanitize dates
             $sanitized_dates = array();
