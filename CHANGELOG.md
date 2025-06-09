@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2024-12-19
+
+### Added
+- Automatic date blocking functionality for submitted bookings
+- Integration with Fluent Forms `fluentform/submission_inserted` action hook
+- Real-time availability system that blocks booked dates immediately after form submission
+- Date range calculation between check-in and check-out dates
+- Automatic merging of new blocked dates with existing disabled dates
+- Error handling and logging for date processing issues
+- Enhanced debugging capabilities for submission processing
+
+### Technical Details
+- New `automatically_disable_booked_dates()` method in `GDB_Frontend` class
+- Hooks into Fluent Forms submission process with priority 20
+- Processes date ranges from check-in to check-out (excluding check-out day)
+- Validates form data and restriction configurations before processing
+- Updates `_gdb_disabled_dates` meta field automatically
+
 ## [2.0.0] - 2024-05-30
 
 ### Major Update - Multi-Configuration System

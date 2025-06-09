@@ -133,6 +133,9 @@ class Global_Date_Blocker {
 
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+        // Add this line to automatically disable booked dates on successful submission.
+        $this->loader->add_action('fluentform/submission_inserted', $plugin_public, 'automatically_disable_booked_dates', 20, 3);
     }
 
     /**

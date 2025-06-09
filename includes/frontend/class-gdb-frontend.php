@@ -154,4 +154,101 @@ class GDB_Frontend {
             'configCount' => count($frontend_configs)
         ));
     }
+
+    /**
+     * Automatically block dates in a calendar restriction after a successful form submission.
+     *
+     * This method hooks into Fluent Forms' submission process. When a form with a
+     * linked calendar restriction is submitted, it takes the check-in and check-out
+     * dates and adds the entire date range to the restriction's disabled dates list.
+     *
+     * @since    2.0.1
+     * @param    int       $submissionId   The ID of the submission entry.
+     * @param    array     $formData       The submitted form data.
+     * @param    object    $form           The Fluent Form object.
+     */
+    public function automatically_disable_booked_dates($submissionId, $formData, $form) {
+        // 1. Get the form ID from the form object.
+        $form_id = $form->id;
+
+        // 2. Find the restriction post linked to this form ID.
+        $args = array(
+            'post_type'      => 'gdb_restriction',
+            'post_status'    => 'publish',
+            'posts_per_page' => 1,
+            'meta_query'     => array(
+                array(
+                    'key'     => '_gdb_form_id',
+                    'value'   => $form_id,
+                    'compare' => '=',
+                ),
+            ),
+        );
+        $restriction_posts = get_posts($args);
+
+        // 3. If no restriction is found for this form, exit.
+        if (empty($restriction_posts)) {
+            return;
+        }
+
+        $restriction_post = $restriction_posts[0];
+        $restriction_id = $restriction_post->ID;
+
+        // 4. Get the field names for check-in and check-out from the restriction's meta data.
+        $checkin_field_name  = get_post_meta($restriction_id, '_gdb_checkin_field_name', true);
+        $checkout_field_name = get_post_meta($restriction_id, '_gdb_checkout_field_name', true);
+
+        // If field names are not configured, exit.
+        if (empty($checkin_field_name) || empty($checkout_field_name)) {
+            return;
+        }
+
+        // 5. Get the submitted date values from the form data.
+        $checkin_date_str  = isset($formData[$checkin_field_name]) ? sanitize_text_field($formData[$checkin_field_name]) : null;
+        $checkout_date_str = isset($formData[$checkout_field_name]) ? sanitize_text_field($formData[$checkout_field_name]) : null;
+
+        // If dates are not present in the submission, exit.
+        if (!$checkin_date_str || !$checkout_date_str) {
+            return;
+        }
+
+        // 6. Calculate the date range to block.
+        try {
+            $start_date = new DateTime($checkin_date_str);
+            $end_date   = new DateTime($checkout_date_str);
+
+            // The range to block is from the check-in date up to (but not including) the check-out date.
+            $dates_to_block = array();
+            $interval = new DateInterval('P1D');
+            $period   = new DatePeriod($start_date, $interval, $end_date);
+
+            foreach ($period as $date) {
+                $dates_to_block[] = $date->format('Y-m-d');
+            }
+            
+            // If the range is empty or invalid, exit.
+            if (empty($dates_to_block)) {
+                return;
+            }
+
+            // 7. Get existing disabled dates.
+            $existing_disabled_dates = get_post_meta($restriction_id, '_gdb_disabled_dates', true);
+            if (!is_array($existing_disabled_dates)) {
+                $existing_disabled_dates = array();
+            }
+
+            // 8. Merge new dates with existing ones, ensuring no duplicates.
+            $updated_disabled_dates = array_unique(array_merge($existing_disabled_dates, $dates_to_block));
+            sort($updated_disabled_dates); // Sort dates for consistency.
+
+            // 9. Save the updated list of disabled dates.
+            update_post_meta($restriction_id, '_gdb_disabled_dates', $updated_disabled_dates);
+
+        } catch (Exception $e) {
+            // Log any errors during date processing if debug mode is on.
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Global Date Blocker: Error processing submitted dates. ' . $e->getMessage());
+            }
+        }
+    }
 } 
